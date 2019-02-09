@@ -1,0 +1,692 @@
+/*  Global 
+====================================== */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	box-sizing: border-box;
+	scroll-behavior: smooth;    /*  Para el Scroll to the top. NO soportado por IE y Safari */
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;   /*  Heredar esta propiedad de su padre directo  */
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2 {
+	font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+	font-size: 80px;
+}
+
+h2 {
+	text-transform: uppercase;
+	color: rgb(204, 0, 0);
+	padding: 30px 20px 0;
+}
+
+a {
+	color: white;
+}
+
+.job-description a:hover {
+	text-decoration: none;
+	color: rgb(204, 0, 0);
+}
+
+.uppercase {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.container {
+	padding: 40px 50px;
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+/*  Header & Footer 
+========================================  */
+
+header, footer {
+	background: linear-gradient(to top right, #cc0000 0%, #ffffff 100%);
+	color: black;
+}
+
+
+/*  Header  */
+
+header {
+	padding-top: 50px;
+	position: relative;/*  Porque es un elemento padre por ejemplo para el link PDF al que queremos posicionar de manera absoluta
+	por lo tanto su elemento padre debe de estar posicionado primero, si no sus elementos hijos se posicionarán con respecto al viewport  */
+	display: flex;
+	height: 100vh;
+	z-index: 2;   /* Especificado a efectos de funcionamiento del "scrollBtn"  */
+}
+
+header .col-wide p, header h3, header h1, header h2 {
+	text-align: center;
+}
+
+header h2:last-of-type {   /* Solo el último de tipo "h2" que contiene el Header   */
+	line-height: 5;
+	text-transform: initial;   /*  Volverlo a su estado inicial ya que antes tuvo una modificación de estilo  */
+	color: rgb(204, 0, 0);
+}
+
+.profilePic {
+	border-radius: 50%;
+	width: 20vw;
+	height: 40vh;
+	padding: 10px 40px;
+	object-fit: cover;
+	object-position: center;
+}
+
+header h1, header h2 {
+	color: grey;
+	margin: 0;
+}
+
+.download {    /*  Elemento que tiene como padre al "Header" acá buscamos posicionarlo justo debajo de todo el 
+	header en un extremo a la derecha.  */
+	position: absolute;
+	bottom: 0;
+	right: 0;
+
+	text-decoration: none;
+	background: rgb(204, 0, 0);
+	color: white;
+	font-weight: bold;
+	padding: 10px;
+	display: inline-block;
+}
+
+.download:hover {
+	background-color: rgba(128, 128, 128, 0.5);    /*  Grey  */
+}
+
+#about .container {   /*  Para web responsive, evita las Media Queries  */
+	display: flex;
+
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	-moz-flex-flow: row wrap;
+
+	justify-content: space-around;
+	flex-shrink: 1;    /* adjusted */
+	overflow: scroll;
+}
+
+#about .col-wide {
+	padding: 50px 0 30px;
+}
+
+
+/*  Footer */
+
+footer {
+	text-align: center;
+}
+
+.contact-info a {
+	padding: 10px;
+	display: inline-block;
+}
+
+#contact .container {
+	display: flex;
+
+	flex-flow: column wrap;
+	-webkit-flex-flow: column wrap;
+	-moz-flex-flow: column wrap;
+}
+
+
+/* Navigation Bar  
+==================================================  */
+
+nav {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	list-style: none;
+	background: rgb(204, 0, 0);
+	display: flex;
+
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	-moz-flex-flow: row wrap;
+	justify-content: center;
+}
+
+nav a {
+	text-decoration: none;
+	display: block;
+	padding: 1em;
+	color: white;
+	text-transform: uppercase;
+}
+
+nav a:hover {
+	background: rgba(128, 128, 128, 0.5);   /*  Grey  */
+}
+
+
+/*  Bar Graph Animado de Habilidades  
+==================================================  */
+
+#skills .container {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+}
+
+
+/*  LABELS Habilidades  */
+.skill {
+	width: 40%;
+	height: 70%;
+}
+
+.lines {
+	height: 100%;
+	list-style-type: none;
+}
+
+.line {
+	height: 30px;
+	margin: 0 auto 10px auto;    /* interlineado entre cada "li" (cada skill)  */
+	line-height: 30px;    /* Posición de las letras dentro  */
+	font-size: 16px;
+	padding-right: 100px;
+}
+
+.line__label {
+	width: 35vw;
+	display: flex;
+	justify-content: flex-end;    /* Junto al gráfico  */
+	padding-right: 25px;    /*  Separarlo un poco de las barras para mejor estética en mobile  */
+}
+
+.line__label.title {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: black;
+}
+
+/*  Graph  */
+.graph-cont {
+	width: 60%;
+	height: 70%;
+}
+
+.bar {
+	height: 30px;
+	margin: 0 auto 10px auto;    /*  interlineado  */
+	line-height: 30px;    /* Posición de los números dentro del bar */
+	font-size: 16px;
+	color: white;
+	padding: 0 0 0 10px;
+	position: relative;
+	z-index: -1;
+}
+
+.bar::before {
+	content: '';
+	width: 100%;
+	position: absolute;
+	left: 0;
+	height: 30px;
+	top: 0;
+	z-index: -2;
+	background: #ecf0f1;
+}
+
+.bar::after {
+	content: '';
+	background: linear-gradient(to left, rgb(204, 0, 0), rgb(169, 169, 169));
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	height: 30px;
+	transition: 0.7s;
+	display: block;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+
+	animation: bar-before 1 1.8s;
+	-webkit-animation: bar-before 1 1.8s;
+	-moz-animation: bar-before 1 1.8s;
+	-o-animation: bar-before 1 1.8s;
+}
+
+/*  Porcentaje de cada Skill  */
+.bar1::after {
+	max-width: 60%;
+}
+
+.bar2::after {
+	max-width: 60%;
+}
+
+.bar3::after {
+	max-width: 25%;
+}
+
+.bar4::after {
+	max-width: 25%;
+}
+
+.bar5::after {
+	max-width: 30%;
+}
+
+.bar6::after {
+	max-width: 35%;
+}
+
+.bar7::after {
+	max-width: 50%;
+}
+
+.bar8::after {
+	max-width: 70%;
+}
+
+.bar9::after {
+	max-width: 50%;
+}
+
+.bar10::after {
+	max-width: 15%;
+}
+
+
+@keyframes bar-before {
+	0% {
+		width: 0px;
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
+
+/* ===========================================================================   */
+
+
+/*  Education Section 
+========================================  */
+
+.education {
+	background: linear-gradient(rgba(220, 220, 220, 0.6), rgba(220, 220, 220, 0.6)),
+		url(../Images/libro.jpg) no-repeat fixed;
+	background-size: cover;
+	width: 100vw;
+}
+
+p+h3 {   /*  Aplicar este estilo a los "h3" que están seguidos por un párrafo "p" */
+	margin-top: 30px;
+}
+
+#education .container {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	-moz-flex-flow: row wrap;
+}
+
+.idiomas {
+	display: flex;
+	justify-content: flex-end;
+}
+
+
+/*  ACORDEON   */
+.accordion {
+	margin: 0 auto;
+}
+
+.toggle {
+	display: none;    /*  Esconder el "Checkbox"  */
+}
+
+.option {
+	position: relative;
+	margin-bottom: 16px;
+}
+
+.title, .content {
+	transform: translateZ(0);   /*  Posicionamiento del "icono (+) */
+
+	transition: all 0.2s;    /*  Velocidad del cierre  */
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-o-transition: all 0.2s;
+}
+
+.title {
+	background: white;
+	padding: 16px;
+	display: block;
+	color: rgb(128, 128, 128);    /*  Grey  */
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+	cursor: pointer;
+}
+
+.title:after, .title:before {     /*  Posicionamiento del icono (la cruz)   */
+	content: '';
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	width: 2px;
+	height: 12px;
+	background-color: rgb(128, 128, 128);	/*  Grey  */
+
+	transition: all 0.2s;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-o-transition: all 0.2s;
+}
+
+.title:after {
+	transform: rotate(90deg);
+}
+
+.content {
+	max-height: 0;    /*  Hace que aparezca cerrado el contenedor   */
+	overflow: hidden;
+	background-color: white;
+}
+
+.toggle:checked+.title,
+.toggle:checked+.title+.content {
+	box-shadow: 3px 3px 6px #ddd, -3px 3px 6px #ddd;
+}
+
+.toggle:checked+.title+.content {
+	max-height: 500px;
+}
+
+.toggle:checked+.title:before {
+	transform: rotate(90deg);
+}
+
+
+
+/* ===========================================================================   */
+
+
+
+/* Work Experience Section  
+==================================================  */
+
+.work {
+	background-color: rgb(220, 220, 220);
+	display: flex;
+	flex-direction: column;
+}
+
+#work .container {
+	flex-wrap: wrap;    /*  Para responsive que se coloque cada div uno encima del otro   */
+}
+
+.work .col-narrow {
+	margin-bottom: 20px;
+}
+
+h3~p {    /*  Relación de Siblings, cualquier párrafo que siga al "h3" tome este estilo  */
+	margin: 0px;
+}
+
+.job-description {
+	margin-bottom: 25px;
+}
+
+.job-description p:first-of-type {   /* Selector de Descendiente, sólo afectará párrafos dentro de la caja que contiene esta clase  */
+	margin-top: 0;
+}
+
+.job-description li {
+	line-height: 4;
+}
+
+.job-description p {
+	margin-left: 50px;
+}
+
+.nestedList li {
+	text-transform: lowercase;
+	font-weight: normal;
+	margin-left: 50px;
+	line-height: 1.6;
+}
+
+
+/* ===========================================================================   */
+
+
+
+/*  Botón de Scroll 
+============================================ */
+
+
+.fa-angle-double-up, #scrollButton {
+
+	display: none;     /*  Por default, no aparecerá el botón  */
+	position: fixed;
+	bottom: 20px;
+	right: 30px;
+	z-index: 1;
+	font-size: 38px;
+	border: none;
+	outline: none;
+	color: rgb(204, 0, 0);
+	cursor: pointer;
+	padding: 15px;
+}
+
+.fa-angle-double-up:hover {
+	color: rgba(128, 128, 128, 0.5);    /*  Grey  */
+}
+
+
+
+
+/*  Media Queries 
+==============================================================  */
+
+
+/*  Mobile   */
+
+@media all and (max-width: 600px) {
+
+	nav {
+		flex-flow: column wrap;
+		-webkit-flex-flow: column wrap;
+		-moz-flex-flow: column wrap;
+
+		padding: 0;
+	}
+
+	nav a {
+		text-align: center;
+		padding: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	nav li:last-of-type a {
+		border-bottom: none;
+	}
+
+	/*  About  */
+	h1 {
+		font-size: 30px;
+	}
+
+	#about .col-narrow {    /*  Aumentar el tamaño de la columna "col-narrow" a efectos de tamaño de la imagen  */
+		width: 70%;
+		height: 30%;
+	}
+
+	.profilePic {
+		position: relative;
+		top: 130px;
+		z-index: -2;
+		width: 100px;
+		margin-bottom: 80px;
+	}
+
+	/*  Work Experience  */
+	.job-description li {
+		line-height: 2;
+	}
+
+	.uppercase {
+		padding-top: 40px;   /* Cada lista dentro del "li .jobDescription" Espacio para mejor visual  */
+	}
+
+	/*  Habilidades "Bar Graph */
+	.line__label {
+		font-size: 0.7em;
+		line-height: 1.6;
+		text-align: end;
+	}
+
+	.line {
+		height: 20px;
+	}
+
+
+	.bar {
+		height: 20px;
+		margin: 0 auto 10px auto;    /* interlineado  */
+		line-height: 20px;    /* Posición de los números dentro del Bar   */
+		font-size: 0.5em;
+		padding: 0 0 0 10px;
+		position: relative;
+	}
+
+	.bar::before {
+		height: 20px;
+	}
+
+	.bar::after {
+		height: 20px;
+	}
+
+	/*  Education  */
+	.idiomas {
+		margin-top: 30px;
+		justify-content: center;
+	}
+
+	.accordion {
+		width: 50%;
+	}
+
+	/*  Scroll Icon  */
+	.fa-angle-double-up {
+		font-size: 28px;
+	}
+
+}
+
+
+/*  Tablets   */
+
+@media all and (max-width: 768px) {
+	nav {
+		justify-content: space-around;
+	}
+
+	header {
+		text-align: center;
+	}
+
+	/*  About  */
+	h1 {
+		font-size: 60px;
+	}
+
+	/*  Work  */
+	.work .container .col-narrow p {
+		text-align: center;
+	}
+
+	.work .container {
+		padding-bottom: 0px;
+		text-align: initial;
+	}
+
+}
+
+
+
+/* Medium devices (landscape tablets, 899px) */
+
+@media (max-width: 899px) {
+
+	header {
+		text-align: center;
+	}
+
+	/*  About  */
+	h1 {
+		font-size: 60px;
+	}
+
+	.profilePic {
+		width: 60%;
+		height: 40%;
+	}
+
+	/*  Work  */
+	.work .container .col-narrow p {
+		text-align: center;
+	}
+
+	.work .container {
+		padding-bottom: 0px;
+		text-align: initial;
+	}
+
+}
+
+
+/* Large devices (laptops/desktops, 900px and up) */
+@media (min-width: 900px) {
+
+	.col-narrow {
+		width: 30%;
+	}
+
+	.col-wide {
+		width: 70%;
+	}
+
+}
